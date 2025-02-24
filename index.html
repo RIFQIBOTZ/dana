@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Payment Gateway | QRIS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Exo+2:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00f3ff;
+            --neon-purple: #bc13fe;
+            --cyber-gradient: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0a0e17;
+            font-family: 'Exo 2', sans-serif;
+            overflow: hidden;
+        }
+
+        .cyber-border {
+            position: relative;
+            padding: 2px;
+            border-radius: 15px;
+            background: var(--cyber-gradient);
+            animation: borderGlow 2s linear infinite;
+            box-shadow: 0 0 20px rgba(188, 19, 254, 0.3);
+            margin: 20px;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .container {
+            background: rgba(10, 14, 23, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px 30px;
+            border-radius: 14px;
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: cyberEnter 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        @keyframes cyberEnter {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            color: #fff;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .qris-container {
+            position: relative;
+            margin: 20px 0;
+            perspective: 1000px;
+        }
+
+        .qris-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px;
+            transform-style: preserve-3d;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .qris-card:hover {
+            transform: rotateX(5deg) rotateY(5deg) scale(1.02);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.2);
+        }
+
+        .qris-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, var(--neon-blue), transparent 30%);
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        .qris-img {
+            width: 100%;
+            border-radius: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .button-group {
+            display: grid;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .cyber-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 243, 255, 0.3);
+        }
+
+        .cyber-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 243, 255, 0.4),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .cyber-btn:hover {
+            background: rgba(0, 243, 255, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+        }
+
+        .cyber-btn:hover::before {
+            left: 100%;
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px 15px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="cyber-border">
+        <div class="container">
+            <h1>⚡ CYBER PAYMENT ⚡</h1>
+            
+            <div class="qris-container">
+                <div class="qris-card">
+                    <img src="your-qris-image.png" alt="Cyber QRIS" class="qris-img">
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="cyber-btn" onclick="downloadQR()">
+                    <span style="margin-right: 10px">▼</span> DOWNLOAD QR
+                </button>
+                
+                <a href="https://wa.me/yournumber" target="_blank" class="cyber-btn">
+                    <span style="margin-right: 10px">📤</span> KIRIM BUKTI
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Particle animation
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: absolute;
+                    width: 2px;
+                    height: 2px;
+                    background: rgba(0, 243, 255, ${Math.random() * 0.5 + 0.2});
+                    border-radius: 50%;
+                `;
+                
+                gsap.to(particle, {
+                    x: Math.random() * innerWidth,
+                    y: Math.random() * innerHeight,
+                    duration: Math.random() * 5 + 3,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "power1.inOut"
+                });
+
+                particles.appendChild(particle);
+            }
+        }
+
+        function downloadQR() {
+            const link = document.createElement('a');
+            link.download = 'a.png';
+            link.href = 'a.png';
+            link.click();
+        }
+
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            setTimeout(() => {
+                document.querySelector('.container').style.opacity = 1;
+            }, 100);
+        });
+    </script>
+</body>
+</html>
